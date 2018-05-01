@@ -42,8 +42,6 @@ public class HeadersExchangeTest {
 
         Message queue4 = rabbitTemplate.receive("queue4");
         System.out.println("第一个输出：" + new String(queue4.getBody()));
-/*        Message queue4_2 = rabbitTemplate.receive("queue4");
-        System.out.println("第二个输出：" + queue4_2.getBody());*/
         Message queue5 = rabbitTemplate.receive("queue5");
         System.out.println("第三个输出：" + new String(queue5.getBody()));
 

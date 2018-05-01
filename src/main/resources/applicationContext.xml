@@ -9,7 +9,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/rabbit
-       http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd">
+       http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
     <context:property-placeholder location="classpath:resources.properties"/>
     <context:component-scan base-package="org.springframework.message"/>
@@ -58,7 +58,6 @@
     <rabbit:headers-exchange name="headersExchange">
         <rabbit:bindings>
             <rabbit:binding queue="queue4" key="betty" value="rubble"   />
-            <rabbit:binding queue="queue4" key="fred" value="flintstone" />
             <rabbit:binding queue="queue5" key="barney" value="rubble"   />
         </rabbit:bindings>
     </rabbit:headers-exchange>
@@ -71,6 +70,11 @@
             <rabbit:binding queue="queue6"/>
         </rabbit:bindings>
     </rabbit:fanout-exchange>
+
+
+    <rabbit:listener-container connection-factory="connectionFactory" concurrency="2" prefetch="3" type="direct">
+        <rabbit:listener ref="handlerListener" method="handler" queue-names="queue5,queue6"/>
+    </rabbit:listener-container>
 
 
     <!--rabbitTemplate 实现对Rabbit的访问，并设置默认的exchange 和 routing key匹配-->
